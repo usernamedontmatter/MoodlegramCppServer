@@ -13,12 +13,8 @@ namespace EncryptingLayout {
         explicit EncryptingLayoutInterface(IOStreamType* iostream) : iostream(iostream) {}
         virtual ~EncryptingLayoutInterface() = default;
 
-        virtual void openStream() {
-            this->iostream->openStream();
-        }
-        virtual void closeStream() {
-            this->iostream->closeStream();
-        }
+        virtual void openStream() {}
+        virtual void closeStream() {}
         virtual void writeMessage(const std::string& message) {
             this->iostream->writeMessage(message);
         }

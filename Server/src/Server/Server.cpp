@@ -27,6 +27,8 @@ namespace Server {
         typename IOStreamCreatorType::Stream>, DatabaseType, typename IOStreamCreatorType::Stream>
     void Server<DatabaseType, AuthType, IOStreamCreatorType>::process_command(typename IOStreamCreatorType::Stream* iostream) {
         try {
+            iostream->openStream();
+
             std::string* buffer;
             std::string* command = iostream->readMessage(4);
             // Version
@@ -108,6 +110,7 @@ namespace Server {
                         send_error(iostream, 1, "Unsupported command");
                     }
 
+                    encrypted_iostream->closeStream();
                     delete encrypted_iostream;
                 }
             }
@@ -115,12 +118,11 @@ namespace Server {
                 send_error(iostream, 1, "Unsupported version");
             }
 
+            iostream->closeStream();
             delete command;
         } catch (std::exception &e) {
             std::cerr << e.what() << std::endl;
         }
-
-        iostream->closeStream();
 
         delete iostream;
     }
