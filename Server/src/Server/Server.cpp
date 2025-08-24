@@ -141,9 +141,8 @@ namespace Server {
     void Server<DatabaseType, AuthType, IOStreamCreatorType>::start() {
         if (is_running) throw ServerError::ServerAlreadyStartedError();
 
-        std::thread(&Server::run, this).detach();
-
         is_running = true;
+        std::thread(&Server::run, this).detach();
     }
 
     template<template <typename> class DatabaseType, template <template <typename> class, typename> class AuthType,
