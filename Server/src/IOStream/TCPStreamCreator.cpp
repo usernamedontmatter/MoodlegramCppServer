@@ -32,11 +32,17 @@ namespace IOStream {
         is_open = false;
     }
     void TCPStreamCreator::Stream::writeMessage(const std::string& message) {
-        if (write(socket_fd, message.c_str(), message.length()) <= 0) throw TCPStreamError::DisconnectionError();
+        if (write(socket_fd, message.c_str(), message.length()) != message.length()) throw TCPStreamError::DisconnectionError();
     }
-    std::string* TCPStreamCreator::Stream::readMessage( unsigned long long length) {
+    std::string* TCPStreamCreator::Stream::readMessage(unsigned long long length) {
         auto message = new std::string(length, 0);
-        if (read(socket_fd, message->data(), length) <= 0) throw TCPStreamError::DisconnectionError();
+        unsigned long long bytes_read = 0;
+
+        while (bytes_read != length) {
+            unsigned long long diff = read(socket_fd, message->data() + bytes_read, length);
+            if (diff == -1) throw TCPStreamError::DisconnectionError();
+            bytes_read += diff;
+        }
 
         return message;
     }

@@ -18,9 +18,13 @@ namespace Server {
     void Server<DatabaseType, AuthType, IOStreamCreatorType>::send_error(IOStreamType* iostream, uint8_t status,
                                                                   const std::string &error_message) {
         std::string str;
-        str.push_back(static_cast<char>(status));
+        str.resize(9);
+        str[0] = static_cast<char>(status);
+        uint64_t len = error_message.length();
+        *std::next(str.data()) = *reinterpret_cast<char*>(&len);
+        str += error_message;
+
         iostream->writeMessage(str);
-        iostream->writeMessage(error_message);
     }
     template<template <typename> class DatabaseType, template <template <typename> class, typename> class AuthType,
         IOStream::IOStreamCreatorConcept IOStreamCreatorType> requires Auth::AuthConcept<AuthType<DatabaseType,
@@ -89,22 +93,21 @@ namespace Server {
                         auto user = database.getUser(id);
                         uint64_t message_count = user->getQueueLength();
 
-                        buffer = new std::string(1, 0);
+                        buffer = new std::string(9, 0);
+
+                        *reinterpret_cast<uint64_t*>(std::next(buffer->data())) = message_count;
                         iostream->writeMessage(*buffer);
 
-                        buffer->resize(8);
-                        *reinterpret_cast<uint64_t*>(buffer->data()) = message_count;
-                        iostream->writeMessage(*buffer);
-
+                        delete buffer;
                         for (uint64_t i = 0; i < message_count; ++i) {
                             auto message = user->popMessage();
-                            *reinterpret_cast<uint64_t*>(buffer->data()) = static_cast<uint64_t>(message.message.length());
-                            iostream->writeMessage(*buffer);
-                            iostream->writeMessage(message.message);
+                            auto str = std::string(8, 0) + message.message;
+
+                            *reinterpret_cast<uint64_t*>(str.data()) = static_cast<uint64_t>(message.message.length());
+                            iostream->writeMessage(str);
                         }
 
                         delete user;
-                        delete buffer;
                     }
                     else {
                         send_error(iostream, 1, "Unsupported command");
