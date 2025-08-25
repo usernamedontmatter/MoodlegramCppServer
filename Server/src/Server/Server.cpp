@@ -101,9 +101,10 @@ namespace Server {
                         delete buffer;
                         for (uint64_t i = 0; i < message_count; ++i) {
                             auto message = user->popMessage();
-                            auto str = std::string(8, 0) + message.message;
+                            auto str = std::string(8 + 8 , 0) + message.message;
 
-                            *reinterpret_cast<uint64_t*>(str.data()) = static_cast<uint64_t>(message.message.length());
+                            *reinterpret_cast<uint64_t*>(str.data()) = message.sender_id;
+                            *reinterpret_cast<uint64_t*>(str.data() + 8) = static_cast<uint64_t>(message.message.length());
                             iostream->writeMessage(str);
                         }
 
