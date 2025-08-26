@@ -3,10 +3,13 @@
 #include <netinet/in.h>
 #include <string>
 
+#include "../IOStream/TCPStream.hpp"
+
 #define DEFAULT_ADDRESS "127.0.0.1"
 #define DEFAULT_PORT 8000
 
 namespace IOStream {
+
     namespace TCPStreamError {
         struct TCPStreamError : std::exception {};
 
@@ -51,18 +54,7 @@ namespace IOStream {
         sockaddr_in socket_address{};
 
     public:
-        class Stream {
-        protected:
-            bool is_open = false;
-            int socket_fd;
-        public:
-            void openStream();
-            void closeStream();
-            void writeMessage(const std::string& message);
-            std::string* readMessage(unsigned long long length);
-
-            explicit Stream(int socket_fd) : socket_fd(socket_fd) {}
-        };
+        using Stream = TCPStream;
 
         explicit TCPStreamCreator(const std::string& address = DEFAULT_ADDRESS, const int port = DEFAULT_PORT);
         ~TCPStreamCreator();

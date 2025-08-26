@@ -5,6 +5,7 @@
 
 #include "../Auth/Auth.hpp"
 #include "../../include/IOStream/IOStream.hpp"
+#include "../../include/IOStreamCreator/IOStreamCreator.hpp"
 
 namespace Server {
     template<template <typename> class DatabaseType, template <template <typename> class, typename> class AuthType,

@@ -1,6 +1,7 @@
 #include "src/Auth/NoAuth.cpp"
 #include "src/Database/TempDatabase.cpp"
-#include "src/IOStream/TCPStreamCreator.cpp"
+#include "src/IOStream/TCPStream.cpp"
+#include "src/IOStreamCreator/TCPStreamCreator.cpp"
 #include "src/Server/Server.cpp"
 
 int main() {

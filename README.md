@@ -2,11 +2,11 @@
 ## Project
 This project is server part of Moodlegram
 
-API version: 1.0
+API version: 1.0.0
 
-Server API version: 1.0
+Server API version: 1.0.0
 
-Server version: 1.0
+Server version: 1.0.1
 
 
 ## Moodlegram

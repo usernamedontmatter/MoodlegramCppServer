@@ -1,7 +1,6 @@
 #pragma once
 
 #include "IOStreamConcept.hpp"
-#include "../IOStreamCreator/IOStreamCreatorConcept.hpp"
-#include "../IOStreamCreator/TCPStreamCreator.hpp"
+#include "TCPStream.hpp"
 
-static_assert(IOStream::IOStreamCreatorConcept<IOStream::TCPStreamCreator>);
+static_assert(IOStream::IOStreamConcept<IOStream::TCPStream>);
