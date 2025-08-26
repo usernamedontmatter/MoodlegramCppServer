@@ -47,10 +47,18 @@ Auth types:
 IOStream class control input-output operations
 
 IOStreamConcept - concept of iostream
-IOStreamCreatorConcept - concept of class that generate streams
 
 IOStream types:
 * TCPStream. IO by pure tcp
+
+### IOStreamCreator
+
+IOStreamCreator class generate iostreams
+
+IOStreamCreatorConcept - concept of class that generate streams
+
+IOStreamCreator types:
+* TCPStreamCreator. Create TCPStream
 
 ### EncryptingLayout
 
