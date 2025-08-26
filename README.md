@@ -2,6 +2,13 @@
 ## Project
 This project is server part of Moodlegram
 
+API version: 1.0
+
+Server API version: 1.0
+
+Server version: 1.0
+
+
 ## Moodlegram
 
 Moodlegram is an opensource messanger specializing on security, privacy and fault tolerance
