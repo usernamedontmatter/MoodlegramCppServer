@@ -5,6 +5,6 @@
 #include "NoAuth.hpp"
 
 #include "../Database/TempDatabase.hpp"
-#include "../IOStream/TCPStreamCreator.hpp"
+#include "../IOStreamCreator/TCPStreamCreator.hpp"
 
 static_assert(Auth::AuthConcept<Auth::NoAuth<Database::TempDatabase, IOStream::TCPStreamCreator::Stream>, Database::TempDatabase, IOStream::TCPStreamCreator::Stream>);

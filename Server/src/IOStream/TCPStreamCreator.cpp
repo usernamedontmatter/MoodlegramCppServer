@@ -2,7 +2,7 @@
 #include <unistd.h>
 #include <arpa/inet.h>
 
-#include "../../include/IOStream/TCPStreamCreator.hpp"
+#include "../../include/IOStreamCreator/TCPStreamCreator.hpp"
 
 namespace IOStream {
     TCPStreamCreator::TCPStreamCreator(const std::string& address, const int port) : address(address), port(port) {

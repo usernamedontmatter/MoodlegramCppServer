@@ -1,6 +1,6 @@
 #pragma once
 
-#include "IOStreamConcept.hpp"
+#include "../IOStream/IOStreamConcept.hpp"
 
 namespace IOStream {
     template <typename T>
